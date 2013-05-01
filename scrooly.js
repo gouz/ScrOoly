@@ -5,7 +5,6 @@
 		this.$element = $(content);
 		this.$element.wrap('<div />');
 		this.isMoving = false;
-		this.shift = false;
 		this.visibleTrack = {
 			h: false,
 			v: false
@@ -47,14 +46,15 @@
 			mouseleave: function() {
 				self._toggleTracks(0);
 			},
-			mousewheel: function() {
-				var e = event || window.event;
-				self._scroll((-e.detail / 3) || (e.wheelDelta / 120));
+			mousewheel: function(event) {
+				var e = event.originalEvent;
+				self._scroll(e.wheelDelta / 120, e.wheelDeltaX, e.shiftKey);
 				return false;
 			},
-			DOMMouseScroll: function(event) {
-				self._scroll(event.originalEvent.detail);
-				return false;
+			DOMMouseScroll: function (event) {
+				var e = event.originalEvent;
+				self._scroll(-e.detail / 3, false, e.shiftKey);
+				return false;	
 			},
 			touchstart: function(event) {
 				var e = event.originalEvent;
@@ -101,13 +101,6 @@
 					self.previousMove = e;
 					$('.scr_drag', self._$drag).addClass('scr_moving');
 				}
-			},
-			keydown: function (event) {
-				if (event.keyCode == 16)
-					self.shift = true;
-			},
-			keyup: function (event) {
-				self.shift = false;
 			}
 		});
 		$(window).on('resize', function () {
@@ -115,8 +108,8 @@
 		}).trigger('resize');
 	};
 	ScrOoly.prototype = {
-		_scroll: function (delta) {
-			this._$drag = this.shift ? this.$trackH : this.$trackV;
+		_scroll: function (delta, x, shift) {
+			this._$drag = shift || x ? this.$trackH : this.$trackV;
 			this.move((delta < 0 ? 1 : -1) * this.opts.scrollStep, 0);
 		},
 		_toggleTracks: function (o) {
