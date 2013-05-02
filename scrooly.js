@@ -11,17 +11,20 @@
 		};
 		this.$wrapper = this.$element.parent().css({
 			position: 'relative',
-			width: this.opts.width,
-			height: this.opts.height,
 			overflow: 'hidden'
-		}).addClass(this.$element.attr('class'));
-		this.$element.css({
+		}).attr({
+			'class' : this.$element.attr('class'),
+			'id' : this.$element.attr('id'),
+			'style' : this.$element.attr('style')
+		});
+		this.$element.attr('class', 'scr_content').removeAttr('id').removeAttr('style');
+		this.$element = $('.scr_content', this.$wrapper).css({
 			position: 'absolute',
 			top: 0,
 			left: 0,
 			width: 'auto',
 			height: 'auto'
-		}).attr('class', 'scr_content');
+		});
 		this.$wrapper.append('<div class="scr_track scr_trackV"><div class="scr_drag" /></div><div class="scr_track scr_trackH"><div class="scr_drag" /></div>');
 		$('.scr_drag, .scr_track', this.$wrapper).css('position', 'absolute');
 		$('.scr_drag', this.$wrapper).css({
@@ -110,7 +113,7 @@
 	ScrOoly.prototype = {
 		_scroll: function (delta, x, shift) {
 			this._$drag = shift || x ? this.$trackH : this.$trackV;
-			this.move((delta < 0 ? 1 : -1) * this.opts.scrollStep, 0);
+			this.move((delta < 0 ? 1 : -1) * this.opts.step, 0);
 		},
 		_toggleTracks: function (o) {
 			if (this.visibleTrack.h) 
@@ -157,9 +160,7 @@
 				if (t > this.maxT) t = this.maxT;
 				if (t < 0) t = 0;
 				$drag.css('top', t);
-				this.$element.stop().animate({
-					top: Math.ceil(-t / this.ratio.v)
-				}, this.opts.smoothSpeed);
+				this.$element.css('top', Math.ceil(-t / this.ratio.v));
 			} else {
 				var t = parseInt($drag.css('left'));
 				if (this.moveDrag) {
@@ -170,9 +171,7 @@
 				if (t > this.maxL) t = this.maxL;
 				if (t < 0) t = 0;
 				$drag.css('left', t);
-				this.$element.stop().animate({
-					left: Math.ceil(-t / this.ratio.h)
-				}, this.opts.smoothSpeed);
+				this.$element.css('left', Math.ceil(-t / this.ratio.h));
 			}
 		}
 	};
@@ -188,11 +187,8 @@
 		})
 	};
 	$.fn.scrooly.defaults = {
-		scrollStep: 15,
-		smoothSpeed: 0,
+		step: 15,
 		opacity: 0.5,
-		speed: 200,
-		width: '100%',
-		height: '300px'
+		speed: 200
 	};
 }(window.jQuery);
