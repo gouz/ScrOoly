@@ -16,7 +16,7 @@
 			'class' : this.$element.attr('class'),
 			'id' : this.$element.attr('id'),
 			'style' : this.$element.attr('style')
-		});
+		}).data('scrooly', this);
 		this.$element.attr('class', 'scr_content').removeAttr('id').removeAttr('style');
 		this.$element = $('.scr_content', this.$wrapper).css({
 			position: 'absolute',
@@ -175,7 +175,7 @@
 			}
 		}
 	};
-	$.fn.scrooly = function(option, a, b) {
+	$.fn.scrooly = function(option) {
 		return this.each(function() {
 			var $this = $(this), 
 				data = $this.data('scrooly'), 
@@ -183,7 +183,7 @@
 			if (!data)
 				$this.data('scrooly', ( data = new ScrOoly(this, opts)));
 			if ( typeof option == 'string')
-				data[option](a, b);
+				data[option]();
 		})
 	};
 	$.fn.scrooly.defaults = {
