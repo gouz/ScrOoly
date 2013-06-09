@@ -1,4 +1,4 @@
-! function($) {
+!function($) {
 	var ScrOoly = function(content, opts) {
 		var self = this;
 		this.opts = opts;
@@ -50,12 +50,12 @@
 				self._toggleTracks(0);
 			},
 			mousewheel: function(event) {
-				var e = event.originalEvent;
+				var e = event.originalEvent ? event.originalEvent : event;
 				self._scroll(e.wheelDelta / 120, e.wheelDeltaX, e.shiftKey);
 				return false;
 			},
 			DOMMouseScroll: function (event) {
-				var e = event.originalEvent;
+				var e = event.originalEvent ? event.originalEvent : event;
 				self._scroll(-e.detail / 3, false, e.shiftKey);
 				return false;	
 			},
@@ -72,7 +72,10 @@
 				self.move(self.previousMove, e.targetTouches[0]);
 				self._$drag = self.$trackH;
 				self.move(self.previousMove, e.targetTouches[0]);
-				self.previousMove = e.targetTouches[0];
+				self.previousMove = {
+					pageX : e.targetTouches[0].pageX,
+					pageY : e.targetTouches[0].pageY
+				};
 			},
 			touchend: function() {
 				self.moveDrag = false;
