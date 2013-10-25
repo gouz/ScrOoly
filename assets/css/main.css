@@ -1,0 +1,21 @@
+body {
+    color: #099acb;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+}
+
+.scr_drag { background: #888; border-radius: 5px; }
+.scr_track { background: #EEE; border-radius: 5px; margin: 2px; }
+	.scr_trackH, .scr_trackH .scr_drag { height: 5px; }
+	.scr_trackV, .scr_trackV .scr_drag { width: 5px; }
+
+.scr_hover { background: #444; }
+.scr_moving { background: #03B2F3; }
+
+#scrooly {
+	height: 300px;
+}
