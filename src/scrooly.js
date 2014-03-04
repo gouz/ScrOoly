@@ -125,9 +125,9 @@
 					}
 				}
 			});
-			$(window).on('resize', function() {
+			$(window).on('resize.scrooly', function() {
 				self.resize();
-			}).trigger('resize');
+			}).trigger('resize.scrooly');
 		},
 		_scroll : function(delta, x, shift) {
 			this._$drag = shift || x ? this.$trackH : this.$trackV;
