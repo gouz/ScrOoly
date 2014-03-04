@@ -1,12 +1,6 @@
-/**
- * ScOoly - Custom Scrollbar
- * Copyright (c) 2013 Sylvain "GouZ" Gougouzian (sylvain@gougouzian.fr)
- * MIT (http://www.opensource.org/licenses/mit-license.php) licensed.
- * GNU GPL (http://www.gnu.org/licenses/gpl.html) licensed.
- */
 !function($) {
 	var ScrOoly = function(content, opts) {
-		this.version = 2.1;
+		this.version = 2.2;
 		this.opts = opts;
 		this.$element = $(content);
 		this.init();
@@ -30,6 +24,7 @@
 			}).data('scrooly', this);
 			this.$element.parent().css({
 				width: '100%',
+				height: '100%',
 				position: 'relative'
 			});
 			this.$element.attr('class', 'scr_content').removeAttr('id style');
@@ -37,7 +32,7 @@
 				position : 'absolute',
 				top : 0,
 				left : 0,
-				width : '100%',
+				width : 'auto',
 				height : 'auto'
 			});
 			$('>div', this.$wrapper).append('<div class="scr_track scr_trackV"><div class="scr_drag" /></div><div class="scr_track scr_trackH"><div class="scr_drag" /></div>');
@@ -143,8 +138,8 @@
 				}, this.opts.speed);
 		},
 		resize : function() {
-			this.height = this.$wrapper.height() - this.$trackH.outerHeight(true);
-			this.width = this.$wrapper.width() - this.$trackV.outerWidth(true);
+			this.height = this.$wrapper.height();
+			this.width = this.$wrapper.width();
 			this.$trackV.height(this.height);
 			var $eh = this.$element.height(), $ew = this.$element.width(), h = Math.ceil(this.height * this.height / $eh), w = Math.ceil(this.width * this.width / $ew);
 			if (h > this.height)
