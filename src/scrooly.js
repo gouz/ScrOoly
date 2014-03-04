@@ -1,3 +1,9 @@
+/**
+ - * ScOoly - Custom Scrollbar
+ - * Copyright (c) 2014 Sylvain "GouZ" Gougouzian (sylvain@gougouzian.fr)
+ - * MIT (http://www.opensource.org/licenses/mit-license.php) licensed.
+ - * GNU GPL (http://www.gnu.org/licenses/gpl.html) licensed.
+ - */
 !function($) {
 	var ScrOoly = function(content, opts) {
 		this.version = 2.2;
